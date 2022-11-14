@@ -1,9 +1,10 @@
 package PageObjects;
 
 import java.time.Duration;
-
+import java.util.List;
 
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,6 +43,9 @@ public class DashBoardPage {
     
     @FindBy(id="vizContainer")
     public WebElement dashboardRegion;
+    
+    @FindBy(xpath = "//ul[@class='breadcrumb']/li")
+    public List<WebElement> breadCrumb;
 
     public WebDriver driver;
     public DashBoardPage(WebDriver driver){
@@ -84,6 +88,21 @@ public class DashBoardPage {
     	driver.navigate().back();
     	return url;
     	
+    }
+    public void navigateToDashboard(String dashBoardName){
+        WebElement dashboard=driver.findElement(By.xpath("//h4[text()='"+dashBoardName+"']/.."));
+        WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.elementToBeClickable(dashboard));
+        dashboard.click();
+    }
+
+    public String getBreadCrumb(){
+        StringBuilder breadCr= new StringBuilder();
+        for(int i=0; i<breadCrumb.size()-1;i++){
+            breadCr.append(breadCrumb.get(i).getText()).append(">");
+        }
+        breadCr.append(breadCrumb.get(breadCrumb.size() - 1).getText());
+        return breadCr.toString();
     }
     
     public String getAsOfTodayData() throws Exception{
