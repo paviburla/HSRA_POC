@@ -14,9 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DashBoardPage {
 
-    @FindBy(xpath = "//h4[text()='Health Sites']/..")
-    public WebElement healthSites;
-
+    
     @FindBy(xpath = "//li[@class='active']")
     public WebElement activePageSite;
     
@@ -53,11 +51,7 @@ public class DashBoardPage {
         PageFactory.initElements(this.driver,this);
     }
 
-    public void navigateToHealthSites(){
-        WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(30));
-        wait.until(ExpectedConditions.elementToBeClickable(healthSites));
-        healthSites.click();
-    }
+   
 
     public String getPageTitle(){
         WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(30));

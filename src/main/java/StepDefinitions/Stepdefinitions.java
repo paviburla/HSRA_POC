@@ -49,7 +49,7 @@ public class Stepdefinitions {
         Assert.assertEquals(title,Hooks.driver.getTitle());
     }
     
-    @And("^user header, body, logo and footer is present$")
+    @And("^user verifies header, body, logo and footer is present$")
     public void userVerifyHeaderBodyLogoAndFooterIsPresent(){
     	//Created method to have customization in future
     	DashBoardPage dashBoardPage=new DashBoardPage(Hooks.driver);
