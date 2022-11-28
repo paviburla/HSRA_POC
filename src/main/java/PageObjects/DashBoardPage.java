@@ -1,12 +1,15 @@
 package PageObjects;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -66,21 +69,16 @@ public class DashBoardPage {
     	Assert.assertTrue(dashboardRegion.isDisplayed());
     }
     
-    public String navigateToAbtThisDashboard() throws Exception{
-    	aboutThisDashboard.click();
-    	Thread.sleep(3000);
-    	String url=driver.getCurrentUrl();
-    	driver.navigate().back();
-    	return url;
+    public String navigateToAbtThisDashboard() {
+        WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.elementToBeClickable(aboutThisDashboard));
+    	return aboutThisDashboard.getAttribute("href");
     	
     }
     
-    public String navigateToDashboardExportInstructions() throws Exception{
+    public String navigateToDashboardExportInstructions(){
     	dashboardExportInstructions.click();
-    	Thread.sleep(3000);
-    	String url=driver.getCurrentUrl();
-    	driver.navigate().back();
-    	return url;
+    	return dashboardExportInstructions.getAttribute("href");
     	
     }
     public void navigateToDashboard(String dashBoardName){
@@ -103,6 +101,27 @@ public class DashBoardPage {
     	
     	return dataAsOf.getText();
     	
+    }
+
+    public void verifyDateForRefreshCycle(String refreshCycle,String date) throws InterruptedException {
+        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy");
+        String output=sdf.format(new Date());
+        WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(30));
+        Thread.sleep(3000);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='"+refreshCycle+"']/../td[3]")));
+        List<WebElement> listOfDates=driver.findElements(By.xpath("//td[text()='"+refreshCycle+"']/../td[3]"));
+        List<WebElement> listOfDataSource=driver.findElements(By.xpath("//td[text()='"+refreshCycle+"']/../td[1]"));
+        System.out.println(listOfDates.size());
+        if(date.equalsIgnoreCase("today")) {
+            for (int i = 0; i < listOfDates.size(); i++) {
+                Assert.assertEquals("Date mismatch for " + listOfDataSource.get(i).getText() + " is " + listOfDates.get(i).getText(), output, listOfDates.get(i).getText());
+            }
+        }else{
+            for (int i = 0; i < listOfDates.size(); i++) {
+                Assert.assertEquals("Date mismatch for " + listOfDataSource.get(i).getText() + " is " + listOfDates.get(i).getText(), date, listOfDates.get(i).getText());
+            }
+        }
+
     }
 
 }

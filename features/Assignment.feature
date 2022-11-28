@@ -8,7 +8,7 @@ Scenario: Verify the header and footer details of health sites dashboard
     And user verifies header, body, logo and footer is present
     And user navigate to about the dashboard and verify url "https://data.hrsa.gov/Content/Documents/topics/About%20the%20Health%20Sites%20Dashboard.pdf" is loaded
     And user navigate to dashboard export instructions and verify url "https://data.hrsa.gov/Content/Documents/topics/Dashboard_Export_UserGuide_v1.2.pdf" is loaded
-    And user verify data as of now is showing todays date 
+    And user verify data as of now is showing todays date
     Then user verifies bread crumb of the page as "Home>Data>Dashboards>Health Sites"
     
     @all @TC2

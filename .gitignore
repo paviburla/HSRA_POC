@@ -1,1 +1,8 @@
 /target/
+.idea
+.settings
+.classpath
+Screenshot
+Assignment-1.0-SNAPSHOT-jar-with-dependencies.jar
+.project
+TestReports

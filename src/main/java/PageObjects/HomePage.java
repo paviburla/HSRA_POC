@@ -21,10 +21,11 @@ public class HomePage {
         act.moveToElement(driver.findElement(By.xpath("//span[text()='"+mainMenu+"']/.."))).build().perform();
     }
 
-    public void navigateToSubmenu(String subMenu){
+    public void navigateToSubmenu(String subMenu) throws InterruptedException {
         WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(30));
         WebElement subMenuXpath=driver.findElement(By.xpath("//a[text()='"+subMenu+"']"));
         wait.until(ExpectedConditions.elementToBeClickable(subMenuXpath));
+        Thread.sleep(2000);
         subMenuXpath.click();
     }
 }
